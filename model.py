@@ -80,3 +80,5 @@ async def main(message: cl.Message):
         answer += f"\nSources:" + str(sources)
     else:
         answer += "\nNo sources found"
+        
+        await cl.Message(content=answer).send(
