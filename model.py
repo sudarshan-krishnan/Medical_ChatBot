@@ -62,3 +62,21 @@ async def start():
     await msg.update()
 
     cl.user_session.set("chain", chain)
+    
+    
+    
+    @cl.on_message
+async def main(message: cl.Message):
+    chain = cl.user_session.get("chain") 
+    cb = cl.AsyncLangchainCallbackHandler(
+        stream_final_answer=True, answer_prefix_tokens=["FINAL", "ANSWER"]
+    )
+    cb.answer_reached = True
+    res = await chain.acall(message.content, callbacks=[cb])
+    answer = res["result"]
+    sources = res["source_documents"]
+
+    if sources:
+        answer += f"\nSources:" + str(sources)
+    else:
+        answer += "\nNo sources found"
