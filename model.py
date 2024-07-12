@@ -23,3 +23,7 @@ def retrieval_qa_chain(llm, prompt, db):
                                        chain_type_kwargs={'prompt': prompt}
                                        )
     return qa_chain
+
+#Loading the model
+def load_llm():
+    
